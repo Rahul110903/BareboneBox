@@ -1,0 +1,41 @@
+/* For Technology Image Responsiveness */
+@media (max-width: 766px) {
+    .techImage{
+        height: 350px;
+    }
+}
+
+@media (max-width: 540px) {
+    .techImage{
+        height: 300px;
+    }
+}
+
+@media (max-width: 461px) {
+    .techImage{
+        height: 250px;
+    }
+}
+
+@media (max-width: 385px) {
+    .techImage{
+        height: 200px;
+    }
+}
+
+/* Founder image Responsiveness */
+@media (max-width: 768px) {
+    .founderContainer{
+        flex-direction: column;
+        align-items: center;
+        margin: 0px !important
+    }
+    .founderText{
+        margin-top: 20px;
+        padding-left: 0px !important;
+    }
+    .marginCont{
+        margin-top: 30px !important;
+    }
+}
+
