@@ -23,6 +23,20 @@
     }
 }
 
+@media (max-width: 993px) {
+    .aboutFontText{
+        font-size: 18px;
+        line-height: 32px;
+    }
+}
+
+@media (min-width: 993px) {
+    .aboutFontText{
+        font-size: 22px; 
+        line-height: 42px"
+    }
+}
+
 /* Founder image Responsiveness */
 @media (max-width: 768px) {
     .founderContainer{
@@ -38,4 +52,22 @@
         margin-top: 30px !important;
     }
 }
+
+   .word {
+    opacity: 0;
+    display: inline-block;
+    margin-right: 8px;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+   @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
