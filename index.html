@@ -90,15 +90,16 @@
           <div class="row justify-content-center" data-aos="zoom-out">
             <div class="col-xl-7 col-lg-9 text-center">
               <h1 id="animated-text"></h1>
-              <p>
-                At BareboneBox, we specialize in creating powerful apps,
-                stunning websites, and growth-driven marketing strategies. From
-                startups to enterprises, we help you succeed in the digital era.
-              </p>
+              <p id="animated-subtext"></p>
             </div>
           </div>
-          <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
-            <a href="#contact" class="btn-get-started">CONTACT US</a>
+          <div
+            class="text-center"
+            id="contact-button"
+            data-aos="zoom-out"
+            data-aos-delay="100"
+          >
+            <a href="#contact" class="btn-get-started">Contact Us</a>
           </div>
 
           <div class="row gy-4 mt-5">
@@ -172,39 +173,16 @@
 
       <!-- About Section -->
       <section id="about" class="about section light-background">
-        <!-- Section Title -->
-        <div class="container section-title pb-2" data-aos="fade-up">
-          <h2>About Us<br /></h2>
-        </div>
-        <!-- End Section Title -->
-
-        <div class="container">
-          <div
-            class="row justify-content-center"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <div class="col-xl-10 col-lg-9 text-center">
-              <p class="aboutFontText">
-                At <b style="color: #124265">BareboneBox</b>, we turn ideas into
-                impactful digital solutions. From
-                <b style="color: #124265">apps and websites</b> to
-                <b style="color: #124265">maintenance and marketing</b>, we
-                provide everything businesses need to grow in the digital age.
-                Our approach is simple —
-                <b style="color: #124265"
-                  >understand your goals, build with precision, and deliver
-                  lasting value</b
-                >. Backed by a skilled team and modern technology, we ensure
-                every project is tailored to your needs.
-              </p>
-            </div>
-          </div>
-
-          <!-- <div class="row gy-4 mt-2" style="margin: 0px 10px">
-            <div class="content" data-aos="fade-up" data-aos-delay="100">
-              <h4 class="mb-3">Who We Are</h4>
-              <p>
+        <div
+          style="flex-direction: row; display: flex"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          class="container"
+        >
+          <div class="pb-2 col-xl-7 col-lg-7 aboutTxt" data-aos="fade-up">
+            <h2 style="color: #ffffff; font-weight: 600">About Us<br /></h2>
+            <div style="margin-top: 20px; padding-right: 20px">
+              <p class="aboutFontText" style="color: #ffffff">
                 At <b>BareboneBox</b>, we turn ideas into impactful digital
                 solutions. From <b>apps and websites</b> to
                 <b>maintenance and marketing</b>, we provide everything
@@ -216,25 +194,26 @@
                 >. Backed by a skilled team and modern technology, we ensure
                 every project is tailored to your needs.
               </p>
-              <ul>
-                <li>
-                  <i class="bi bi-check2-circle"></i>
-                  <span>
-                    <b>Our Mission:</b> To empower organizations with simple,
-                    scalable, and effective digital solutions.</span
-                  >
-                </li>
-                <li>
-                  <i class="bi bi-check2-circle"></i>
-                  <span>
-                    <b>Our Vision:</b> To be the trusted digital partner for
-                    businesses worldwide.</span
-                  >
-                </li>
-              </ul>
             </div>
-          </div> -->
+          </div>
+
+          <div class="col-xl-5 col-lg-5 aboutImg" data-aos="fade-up">
+            <img
+              src="assets/img/about.avif"
+              class="img-fluid about-image"
+              alt=""
+              style="
+                width: 900px;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 10px;
+              "
+            />
+          </div>
         </div>
+        <!-- Section Title -->
+
+        <!-- End Section Title -->
       </section>
       <!-- /About Section -->
 
@@ -304,20 +283,6 @@
         <div class="container">
           <div class="row gy-4" style="margin: 0px 20px; margin-bottom: 20px">
             <div
-              class="col-lg-6 position-relative align-self-start"
-              data-aos="fade-up"
-              data-aos-delay="100"
-              style="padding: 0px"
-            >
-              <img
-                src="assets/img/about.png"
-                class="img-fluid"
-                alt=""
-                width="450px"
-                style="border-radius: 10px"
-              />
-            </div>
-            <div
               class="col-lg-6 content"
               data-aos="fade-up"
               data-aos-delay="200"
@@ -365,7 +330,7 @@
       <!-- Clients Section -->
       <section class="clients section light-background" id="technologies">
         <div class="container section-title pb-4 pt-5" data-aos="fade-up">
-          <h2>Technologies</h2>
+          <h2 style="color: #ffffff">Technologies</h2>
         </div>
         <!-- End Section Title -->
         <div class="container" data-aos="fade-up">
@@ -1542,24 +1507,54 @@
 
     <script>
       const text = "We Build, Scale & Grow Your Digital Presence";
-      const words = text.split(" ");
+      const subText =
+        "At BareboneBox, we specialize in creating powerful apps, stunning websites, and growth-driven marketing strategies. From startups to enterprises, we help you succeed in the digital era.";
       const animatedText = document.getElementById("animated-text");
+      const animatesSubText = document.getElementById("animated-subtext");
+      const contactButton = document.getElementById("contact-button");
 
-      function animateWords() {
-        animatedText.innerHTML = ""; // reset before replay
-        words.forEach((word, i) => {
+      const words = text.split(" ");
+      const subWords = subText.split(" ");
+      contactButton.style.display = "none";
+      animatedText.style.marginBottom = "100px";
+      animatesSubText.style.marginBottom = "100px";
+
+      function animateWords(textId, text) {
+        textId.innerHTML = ""; // reset before replay
+        text.forEach((word, i) => {
           const span = document.createElement("span");
           span.className = "word";
-          span.style.animationDelay = `${i * 0.3}s`; // stagger effect
+          if (textId === animatedText) {
+            span.style.animationDelay = `${i * 0.3}s`; // stagger effect
+          } else {
+            span.style.animationDelay = `${i * 0.03}s`; // stagger effect
+          }
           span.textContent = word;
-          animatedText.appendChild(span);
+          textId.appendChild(span);
         });
 
-        // Restart animation after full cycle
-        setTimeout(animateWords, words.length * 500);
+        if (textId === animatedText) {
+          // Restart animation after full cycle
+          setTimeout(() => {
+            // const span = document.createElement("span");
+            // span.className = "word";
+            // span.textContent = subText;
+            // animatesSubText.appendChild(span);
+            animatedText.style.marginBottom = "20px";
+            animateWords(animatesSubText, subWords);
+          }, words.length * 300);
+        } else {
+          setTimeout(() => {
+            animatesSubText.style.marginBottom = "0px";
+            contactButton.style.display = "block";
+            setTimeout(() => {
+              contactButton.classList.add("fade-in");
+            }, 50);
+          }, text.length * 50);
+        }
       }
 
-      animateWords();
+      animateWords(animatedText, words);
     </script>
   </body>
 </html>
