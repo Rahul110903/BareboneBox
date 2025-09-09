@@ -27,11 +27,23 @@
     .about-image {
         display: none;
     }
+     .aboutContent {
+        padding-right: 0px !important;
+    }
 }
 
 @media (max-width: 577px) {
     .aboutTxt {
-        padding:0px 50px !important;
+        padding:0px 20px !important;
+    }
+}
+
+@media (min-width:  994px) {
+    .chooseUs {
+        padding-left: 40px !important;
+    }
+      .aboutContent {
+        padding-right: 40px !important;
     }
 }
 
@@ -69,6 +81,17 @@
   opacity: 0;
   transform: translateY(20px); 
   transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+  #services-section {
+  opacity: 0;
+  transform: translateY(20px); 
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#services-section.fade-up {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #contact-button.fade-in {

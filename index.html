@@ -102,7 +102,7 @@
             <a href="#contact" class="btn-get-started">Contact Us</a>
           </div>
 
-          <div class="row gy-4 mt-5">
+          <div class="row gy-4 mt-5" id="services-section">
             <div
               class="col-md-6 col-lg-3"
               data-aos="zoom-out"
@@ -181,7 +181,7 @@
         >
           <div class="pb-2 col-xl-7 col-lg-7 aboutTxt" data-aos="fade-up">
             <h2 style="color: #ffffff; font-weight: 600">About Us<br /></h2>
-            <div style="margin-top: 20px; padding-right: 20px">
+            <div style="margin-top: 20px" class="aboutContent">
               <p class="aboutFontText" style="color: #ffffff">
                 At <b>BareboneBox</b>, we turn ideas into impactful digital
                 solutions. From <b>apps and websites</b> to
@@ -280,15 +280,41 @@
         class="about-alt section"
         style="padding: 10px 0px"
       >
-        <div class="container">
-          <div class="row gy-4" style="margin: 0px 20px; margin-bottom: 20px">
-            <div
-              class="col-lg-6 content"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <h3>Why Choose Us?</h3>
-              <p style="line-height: 26px; margin-bottom: 5px; font-size: 18px">
+        <div class="container section-title pb-1 pt-5" data-aos="fade-up">
+          <h2>Why Choose Us?</h2>
+        </div>
+        <div
+          style="
+            flex-direction: row;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 30px;
+          "
+          data-aos="fade-up"
+          data-aos-delay="100"
+          class="container"
+        >
+          <div class="col-xl-6 col-lg-5 aboutImg" data-aos="fade-up">
+            <img
+              src="assets/img/whychooseus.jpg"
+              class="img-fluid about-image"
+              alt=""
+              style="
+                width: 900px;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 10px;
+              "
+            />
+          </div>
+          <div
+            class="col-xl-6 col-lg-7 aboutTxt"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="chooseUs">
+              <p class="aboutFontText" style="color: #000000; font-size: 16px">
                 We don’t just build digital products — we create solutions that
                 <b style="color: #124265"
                   >drive growth, simplify operations, and strengthen your
@@ -328,9 +354,13 @@
       <!-- /About Alt Section -->
 
       <!-- Clients Section -->
-      <section class="clients section light-background" id="technologies">
+      <section
+        class="clients section"
+        id="technologies"
+        style="background-color: #f6fafd"
+      >
         <div class="container section-title pb-4 pt-5" data-aos="fade-up">
-          <h2 style="color: #ffffff">Technologies</h2>
+          <h2>Technologies</h2>
         </div>
         <!-- End Section Title -->
         <div class="container" data-aos="fade-up">
@@ -730,8 +760,8 @@
       <section id="portfolio" class="portfolio section light-background">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2>Portfolio</h2>
-          <p>
+          <h2 style="color: #ffffff">Portfolio</h2>
+          <p style="color: #ffffff">
             Each project reflects our passion for design, development, and
             delivering real value to clients across industries.
           </p>
@@ -759,8 +789,8 @@
                   alt=""
                 />
                 <div class="portfolio-info">
-                  <h4>App 1</h4>
-                  <p>Lorem ipsum, dolor sit</p>
+                  <h4 style="color: #ffffff">App 1</h4>
+                  <p style="color: #ffffff">Lorem ipsum, dolor sit</p>
                   <a
                     href="assets/img/masonry-portfolio/masonry-portfolio-1.jpg"
                     title="App 1"
@@ -787,8 +817,8 @@
                   alt=""
                 />
                 <div class="portfolio-info">
-                  <h4>Product 1</h4>
-                  <p>Lorem ipsum, dolor sit</p>
+                  <h4 style="color: #ffffff">Product 1</h4>
+                  <p style="color: #ffffff">Lorem ipsum, dolor sit</p>
                   <a
                     href="assets/img/masonry-portfolio/masonry-portfolio-2.jpg"
                     title="Product 1"
@@ -815,8 +845,8 @@
                   alt=""
                 />
                 <div class="portfolio-info">
-                  <h4>Branding 1</h4>
-                  <p>Lorem ipsum, dolor sit</p>
+                  <h4 style="color: #ffffff">Branding 1</h4>
+                  <p style="color: #ffffff">Lorem ipsum, dolor sit</p>
                   <a
                     href="assets/img/masonry-portfolio/masonry-portfolio-3.jpg"
                     title="Branding 1"
@@ -843,8 +873,8 @@
                   alt=""
                 />
                 <div class="portfolio-info">
-                  <h4>App 2</h4>
-                  <p>Lorem ipsum, dolor sit</p>
+                  <h4 style="color: #ffffff">App 2</h4>
+                  <p style="color: #ffffff">Lorem ipsum, dolor sit</p>
                   <a
                     href="assets/img/masonry-portfolio/masonry-portfolio-4.jpg"
                     title="App 2"
@@ -955,8 +985,8 @@
                   alt=""
                 />
                 <div class="portfolio-info">
-                  <h4>Product 3</h4>
-                  <p>Lorem ipsum, dolor sit</p>
+                  <h4 style="color: #ffffff">Product 3</h4>
+                  <p style="color: #ffffff">Lorem ipsum, dolor sit</p>
                   <a
                     href="assets/img/masonry-portfolio/masonry-portfolio-8.jpg"
                     title="Product 3"
@@ -1044,13 +1074,12 @@
               <h2>Rahul Singh</h2>
               <h4>Founder & Technical Head</h4>
               <p class="mt-4">
-                With years of software industry experience, Rahul’s expertise
-                spans from building products at startups to leading large-scale
-                projects for enterprises. His journey includes working across
-                diverse domains, where he combined technical depth with
-                strategic vision to deliver impactful solutions. Rahul actively
-                mentors teams and contributes to shaping the future of digital
-                experiences.
+                With years of software industry experience, I expertise spans
+                from building products at startups to leading large-scale
+                projects for enterprises. My journey includes working across
+                diverse domains, where I combined technical depth with strategic
+                vision to deliver impactful solutions. I actively mentors teams
+                and contributes to shaping the future of digital experiences.
               </p>
             </div>
           </div>
@@ -1068,7 +1097,7 @@
                   src="assets/img/founder/founder-2.jpg"
                   class="img-fluid"
                   alt=""
-                  width="800"
+                  width="820"
                 />
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -1082,12 +1111,12 @@
               <h2>Arnabh Bhanja</h2>
               <h4>Founder & Networking Head</h4>
               <p class="mt-4">
-                With years of software industry experience, Rahul’s expertise
-                spans from building products at startups to leading large-scale
-                projects for enterprises. His journey includes working across
-                diverse domains, where he combined technical depth with
-                strategic vision to deliver impactful solutions. Rahul actively
-                mentors teams and contribute
+                With a strong foundation in Electronics & Communication
+                Engineering, I transformed my passion for problem-solving into
+                entrepreneurship. As the Founder of BareboneBox, I focus on
+                delivering innovative, service-based solutions that empower
+                businesses to grow. By technical expertise, I create impactful
+                results and long-term value.
               </p>
             </div>
           </div>
@@ -1512,10 +1541,12 @@
       const animatedText = document.getElementById("animated-text");
       const animatesSubText = document.getElementById("animated-subtext");
       const contactButton = document.getElementById("contact-button");
+      const serviceSection = document.getElementById("services-section");
 
       const words = text.split(" ");
       const subWords = subText.split(" ");
       contactButton.style.display = "none";
+      serviceSection.style.display = "none";
       animatedText.style.marginBottom = "100px";
       animatesSubText.style.marginBottom = "100px";
 
@@ -1550,6 +1581,12 @@
             setTimeout(() => {
               contactButton.classList.add("fade-in");
             }, 50);
+            setTimeout(() => {
+              serviceSection.style.display = "flex";
+              setInterval(() => {
+                serviceSection.classList.add("fade-up");
+              }, 50);
+            }, 300);
           }, text.length * 50);
         }
       }
