@@ -11,6 +11,8 @@ exports.handler = async (event, context) => {
     const token = params["hub.verify_token"];
     const challenge = params["hub.challenge"];
 
+    console.log("Verification request:", { mode, token, challenge });
+
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
       return {
         statusCode: 200,
