@@ -5,12 +5,13 @@
 exports.handler = async (event, context) => {
   // GET: verification handshake
   if (event.httpMethod === "GET") {
+    const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
     const params = event.queryStringParameters || {};
     const mode = params["hub.mode"];
     const token = params["hub.verify_token"];
     const challenge = params["hub.challenge"];
 
-    if (mode === "subscribe" && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
       return {
         statusCode: 200,
         body: challenge || "OK",
