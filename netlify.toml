@@ -1,0 +1,6 @@
+[build]
+  functions = "netlify/functions"
+
+[dev]
+  # When using Netlify CLI locally, this will route functions.
+  functions = "netlify/functions"
