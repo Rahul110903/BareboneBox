@@ -1,10 +1,10 @@
 import { whatsappSendGateway } from "./whatsappGateway.js";
 
-export const whatsappSendController = async (questions) => {
+export const whatsappSendController = async (to, questions) => {
   try {
     const params = {
       messaging_product: "whatsapp",
-      to: "919289734037",
+      to: to,
       type: "text",
       text: { body: questions },
     };

@@ -32,8 +32,8 @@
 import { whatsappSendController } from "../HealthBot/src/api/whatsappController.js";
 import { QUESTIONS } from "../HealthBot/src/text/question.js";
 
-const whatsappBot = async () => {
-  const response = await whatsappSendController(QUESTIONS.whatIsYourName);
+const whatsappBot = async (to, text) => {
+  const response = await whatsappSendController(to, text);
   console.log("Message sent successfully:", response.data);
 };
 
@@ -61,11 +61,24 @@ export const handler = async (event, context) => {
     try {
       const body = event.body ? JSON.parse(event.body) : {};
       console.log("WhatsApp webhook event:", JSON.stringify(body));
-      return { statusCode: 200, body: body };
+
+      const value = body?.entry?.[0]?.changes?.[0]?.value;
+      const messages = value?.messages;
+
+      if (!messages || messages.length === 0) {
+        return { statusCode: 200, body: "NO_MESSAGE" };
+      }
+
+      const msg = messages[0];
+      const from = msg.from; // USER PHONE NUMBER
+      const userText = msg.text?.body;
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
-        await whatsappBot();
+        await whatsappBot({
+          to: from,
+          text: QUESTIONS.whatIsYourName,
+        });
         console.log("WhatsApp bot executed successfully.");
       } catch (botError) {
         console.error("WhatsApp bot error:", botError);
