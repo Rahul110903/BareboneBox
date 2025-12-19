@@ -41,10 +41,13 @@ export const handler = async (event, context) => {
     const challenge = params["hub.challenge"];
 
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      return new Response(challenge || "OK", { status: 200 });
+      return {
+        statusCode: 200,
+        body: challenge || "OK",
+      };
     }
 
-    return new Response("Forbidden", { status: 403 });
+    return { statusCode: 403, body: "Forbidden" };
   }
 
   // POST: webhook event from Meta
@@ -53,17 +56,23 @@ export const handler = async (event, context) => {
       const body = event.body ? JSON.parse(event.body) : {};
       console.log("WhatsApp webhook event:", JSON.stringify(body));
 
-      whatsappBot();
+      // Call whatsappBot in background (don't await to respond quickly)
+      try {
+        await whatsappBot();
+      } catch (botError) {
+        console.error("WhatsApp bot error:", botError);
+        // Don't fail the webhook response for bot errors
+      }
 
       // TODO: add your event processing logic here (persist, forward, notify, etc.)
 
       // Meta expects a 200 response within a short time window.
-      return new Response("EVENT_RECEIVED", { status: 200 });
+      return { statusCode: 200, body: "EVENT_RECEIVED" };
     } catch (err) {
       console.error("Error parsing webhook body:", err);
-      return new Response("Invalid JSON", { status: 400 });
+      return { statusCode: 400, body: "Invalid JSON" };
     }
   }
 
-  return new Response("Method Not Allowed", { status: 405 });
+  return { statusCode: 405, body: "Method Not Allowed" };
 };
