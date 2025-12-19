@@ -63,8 +63,7 @@ export const handler = async (event, context) => {
       } catch (botError) {
         return {
           statusCode: 400,
-          error: botError,
-          body: "Bot Execution Error",
+          body: botError,
         };
         // Don't fail the webhook response for bot errors
       }
