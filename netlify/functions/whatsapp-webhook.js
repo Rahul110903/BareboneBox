@@ -29,9 +29,9 @@
 //   ]
 // }
 
-const { default: whatsappBot } = require("../HealthBot/src/whatsappBot");
+const whatsappBot = require("../HealthBot/src/whatsappBot");
 
-const handler = async (event, context) => {
+exports.handler = async (event, context) => {
   // GET: verification handshake
   if (event.httpMethod === "GET") {
     const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
@@ -41,13 +41,10 @@ const handler = async (event, context) => {
     const challenge = params["hub.challenge"];
 
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      return {
-        statusCode: 200,
-        body: challenge || "OK",
-      };
+      return new Response(challenge || "OK", { status: 200 });
     }
 
-    return { statusCode: 403, body: "Forbidden" };
+    return new Response("Forbidden", { status: 403 });
   }
 
   // POST: webhook event from Meta
@@ -61,14 +58,12 @@ const handler = async (event, context) => {
       // TODO: add your event processing logic here (persist, forward, notify, etc.)
 
       // Meta expects a 200 response within a short time window.
-      return { statusCode: 200, body: "EVENT_RECEIVED" };
+      return new Response("EVENT_RECEIVED", { status: 200 });
     } catch (err) {
       console.error("Error parsing webhook body:", err);
-      return { statusCode: 400, body: "Invalid JSON" };
+      return new Response("Invalid JSON", { status: 400 });
     }
   }
 
-  return { statusCode: 405, body: "Method Not Allowed" };
+  return new Response("Method Not Allowed", { status: 405 });
 };
-
-export default handler;
