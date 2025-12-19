@@ -1,6 +1,7 @@
 export const apiClient = async ({ method, url, data }) => {
   try {
-    const apiKey = process.env.WHATSAPP_API_KEY;
+    const apiKey =
+      "EAAVZBacNJqiwBQONFLj8OkmNJZA3o2B9JaTZCnGPd3GoBt38WLh2ecqFGvnnQm2NTZArAeTe87Idfjjs2ydJ2NI4RPDHju2E8wBHiGV7ZBkoqJRVrvTvHYQmSkZAIkyrUZB1puorFyaYU2BhZAqrb9k4zJ4fB2sZBnaweiGPbmxhLVbZALKICmIr0VeZAEWDyamsQZDZD";
 
     if (!apiKey) {
       throw new Error("WHATSAPP_API_KEY environment variable is not set");
