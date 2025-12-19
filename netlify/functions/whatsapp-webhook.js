@@ -31,7 +31,7 @@
 
 const { default: whatsappBot } = require("../HealthBot/src/whatsappBot");
 
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
   // GET: verification handshake
   if (event.httpMethod === "GET") {
     const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
@@ -70,3 +70,5 @@ exports.handler = async (event, context) => {
 
   return { statusCode: 405, body: "Method Not Allowed" };
 };
+
+export default handler;
