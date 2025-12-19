@@ -61,6 +61,7 @@ export const handler = async (event, context) => {
     try {
       const body = event.body ? JSON.parse(event.body) : {};
       console.log("WhatsApp webhook event:", JSON.stringify(body));
+      return { statusCode: 200, body: body };
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
