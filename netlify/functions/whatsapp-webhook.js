@@ -29,9 +29,9 @@
 //   ]
 // }
 
-const whatsappBot = require("../HealthBot/src/whatsappBot");
+import whatsappBot from "../HealthBot/src/whatsappBot.js";
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // GET: verification handshake
   if (event.httpMethod === "GET") {
     const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
