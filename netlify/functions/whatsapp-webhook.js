@@ -29,7 +29,13 @@
 //   ]
 // }
 
-import whatsappBot from "../HealthBot/src/whatsappBot.js";
+import { whatsappSendController } from "../HealthBot/src/api/whatsappController.js";
+import { QUESTIONS } from "../HealthBot/src/text/question.js";
+
+const whatsappBot = async () => {
+  const response = await whatsappSendController(QUESTIONS.whatIsYourName);
+  console.log("Message sent successfully:", response.data);
+};
 
 export const handler = async (event, context) => {
   // GET: verification handshake
