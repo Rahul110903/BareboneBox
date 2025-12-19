@@ -61,11 +61,11 @@ export const handler = async (event, context) => {
         await whatsappBot();
         console.log("WhatsApp bot executed successfully.");
       } catch (botError) {
+        console.error("WhatsApp bot error:", botError);
         return {
           statusCode: 400,
-          body: botError,
+          body: botError instanceof Error ? botError.message : String(botError),
         };
-        // Don't fail the webhook response for bot errors
       }
 
       // TODO: add your event processing logic here (persist, forward, notify, etc.)
