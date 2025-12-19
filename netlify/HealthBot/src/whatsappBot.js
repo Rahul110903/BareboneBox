@@ -7,6 +7,7 @@ const whatsappBot = async () => {
     console.log("Message sent successfully:", response.data);
   } catch (error) {
     console.error("Error sending message:", error);
+    throw error;
   }
 };
 
