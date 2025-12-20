@@ -9,6 +9,8 @@ export const whatsappSendController = async (to, questions) => {
       text: { body: questions },
     };
 
+    console.log("WhatsApp Send Params:", params);
+
     const response = await whatsappSendGateway(params);
     return response;
   } catch (error) {
