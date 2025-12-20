@@ -75,10 +75,7 @@ export const handler = async (event, context) => {
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
-        await whatsappBot({
-          to: from,
-          text: QUESTIONS.whatIsYourName,
-        });
+        await whatsappBot(from, QUESTIONS.whatIsYourName);
         console.log("WhatsApp bot executed successfully.");
       } catch (botError) {
         console.error("WhatsApp bot error:", botError);
