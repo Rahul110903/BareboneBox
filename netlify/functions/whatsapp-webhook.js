@@ -34,20 +34,20 @@ import { QUESTIONS } from "../HealthBot/src/text/question.js";
 import { saveConversation } from "./db/controller/chat.contoller.js";
 import connectDB from "./db/index.js";
 
-connectDB()
-  .then(() => {
-    console.log("DB Connected");
-  })
-  .catch((err) => {
-    console.log("Error in connecting to DB:", err);
-  });
-
 const whatsappBot = async (to, text) => {
   const response = await whatsappSendController(to, text);
   console.log("Message sent successfully:", response.data);
 };
 
 export const handler = async (event, context) => {
+  // Initialize DB connection once per function invocation
+  try {
+    await connectDB();
+    console.log("DB Connected");
+  } catch (err) {
+    console.log("Error in connecting to DB:", err);
+    return { statusCode: 500, body: "Database connection failed" };
+  }
   // GET: verification handshake
   if (event.httpMethod === "GET") {
     const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
