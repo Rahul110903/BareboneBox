@@ -30,6 +30,7 @@
 // }
 
 import { whatsappSendController } from "../HealthBot/src/api/whatsappController.js";
+import { FINAL_MESSAGE } from "../HealthBot/src/text/finalMessage.js";
 import { QUESTIONS } from "../HealthBot/src/text/question.js";
 import { saveConversation } from "./db/controller/chat.contoller.js";
 import { connectDB } from "./db/index.js";
@@ -120,6 +121,9 @@ export const handler = async (event, context) => {
             QUESTIONS.whichTimeSlotYouWantToBookAnAppointment
           );
           questionToAsk = QUESTIONS.whichTimeSlotYouWantToBookAnAppointment;
+        } else if (conversationUser == "10 AM") {
+          await whatsappBot(from, FINAL_MESSAGE.appointmentConfirmed);
+          questionToAsk = FINAL_MESSAGE.appointmentConfirmed;
         }
 
         const dataToStore = {
