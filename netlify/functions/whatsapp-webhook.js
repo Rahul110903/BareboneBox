@@ -109,18 +109,18 @@ export const handler = async (event, context) => {
         };
 
         // TODO: Testing the Whole Process (Static) - Conditions
-        if (conversation_user == "Hi") {
+        if (dataToStore.conversation_user == "Hi") {
           await whatsappBot(from, QUESTIONS.whatIsYourName);
-        } else if (conversation_user == "Rahul") {
+        } else if (dataToStore.conversation_user == "Rahul") {
           await whatsappBot(from, QUESTIONS.howOldAreYou);
-        } else if (conversation_user == "23") {
+        } else if (dataToStore.conversation_user == "23") {
           await whatsappBot(from, QUESTIONS.whatIsYourGender);
-        } else if (conversation_user == "Male") {
+        } else if (dataToStore.conversation_user == "Male") {
           await whatsappBot(
             from,
             QUESTIONS.whichDateYouWantToBookAnAppointment
           );
-        } else if (conversation_user == "25th December") {
+        } else if (dataToStore.conversation_user == "25th December") {
           await whatsappBot(
             from,
             QUESTIONS.whichTimeSlotYouWantToBookAnAppointment
