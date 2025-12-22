@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler";
 import { Conversation } from "../models/conversation.js";
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const saveConversation = asyncHandler(async (dataToStore) => {
   if (!dataToStore.from || !dataToStore.messageId) {
@@ -12,6 +13,8 @@ const saveConversation = asyncHandler(async (dataToStore) => {
   if (!conversation) {
     throw new ApiError(500, "Failed to save conversation to database");
   }
+
+  ApiResponse(201, conversation, "Conversation saved successfully");
 
   return conversation;
 });
