@@ -4,8 +4,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const saveConversation = asyncHandler(async (dataToStore) => {
-  if (!dataToStore.from || !dataToStore.messageId) {
-    throw new ApiError(400, "Missing required fields: from and messageId");
+  if (!dataToStore.from) {
+    throw new ApiError(400, "Missing required field: from");
   }
 
   const conversationItem = {
@@ -31,13 +31,25 @@ const saveConversation = asyncHandler(async (dataToStore) => {
   const updateResult = await ConversationThread.updateOne(filter, update, { upsert: true });
 
   // Fetch the thread to return
-  const thread = await ConversationThread.findOne({
-    from: dataToStore.from,
-  }).lean();
+  const thread = await ConversationThread.findOne({ from: dataToStore.from }).lean();
 
   if (!thread) {
     throw new ApiError(500, "Failed to save conversation to database");
   }
+
+  // Normalize _id to string and convert dates to ISO strings for consistent JSON format
+  if (thread._id) thread._id = String(thread._id);
+
+  if (Array.isArray(thread.conversations)) {
+    thread.conversations = thread.conversations.map((c) => ({
+      userText: c.userText || "",
+      botText: c.botText || "",
+      timestamp: c.timestamp ? new Date(c.timestamp).toISOString() : null,
+    }));
+  }
+
+  if (thread.createdAt) thread.createdAt = new Date(thread.createdAt).toISOString();
+  if (thread.updatedAt) thread.updatedAt = new Date(thread.updatedAt).toISOString();
 
   ApiResponse(201, thread, "Conversation saved successfully");
 
