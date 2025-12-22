@@ -9,9 +9,9 @@ const saveConversation = asyncHandler(async (dataToStore) => {
   }
 
   const conversationItem = {
+    type: dataToStore.type || "",
     userText: dataToStore.conversation_user || "",
     botText: dataToStore.conversation_bot || "",
-    type: dataToStore.type || "",
     timestamp: dataToStore.timestamp || new Date(),
   };
 
