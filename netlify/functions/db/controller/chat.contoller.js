@@ -8,26 +8,34 @@ const saveConversation = asyncHandler(async (dataToStore) => {
     throw new ApiError(400, "Missing required fields: from and messageId");
   }
 
-  const messageObj = {
-    messageId: dataToStore.messageId,
-    conversation_user: dataToStore.conversation_user || "",
-    conversation_bot: dataToStore.conversation_bot || "",
-    type: dataToStore.type || "text",
+  const conversationItem = {
+    // keep messageId in item if provided (used for dedupe)
+    ...(dataToStore.messageId ? { messageId: dataToStore.messageId } : {}),
+    userText: dataToStore.conversation_user || "",
+    botText: dataToStore.conversation_bot || "",
     timestamp: dataToStore.timestamp || new Date(),
   };
 
-  // Push message into messages array only if messageId doesn't already exist
-  const updateResult = await ConversationThread.updateOne(
-    {
-      from: dataToStore.from,
-      "messages.messageId": { $ne: dataToStore.messageId },
-    },
-    {
-      $push: { messages: messageObj },
-      $setOnInsert: { from: dataToStore.from },
-    },
-    { upsert: true }
-  );
+  // Build update filter and update payload
+  const filter = { from: dataToStore.from };
+  const update = {
+    $setOnInsert: { from: dataToStore.from },
+    $set: {},
+  };
+
+  // Set top-level message_ig/type on insert (if provided)
+  if (dataToStore.message_ig) update.$setOnInsert.message_ig = dataToStore.message_ig;
+  if (dataToStore.type) update.$setOnInsert.type = dataToStore.type;
+
+  // If messageId provided, prevent duplicate by ensuring no existing item with same messageId
+  if (dataToStore.messageId) {
+    filter["conversations.messageId"] = { $ne: dataToStore.messageId };
+  }
+
+  // Push the conversation item
+  update.$push = { conversations: conversationItem };
+
+  const updateResult = await ConversationThread.updateOne(filter, update, { upsert: true });
 
   // Fetch the thread to return
   const thread = await ConversationThread.findOne({

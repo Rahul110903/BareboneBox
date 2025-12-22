@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const messageSubSchema = new mongoose.Schema(
+const conversationItemSchema = new mongoose.Schema(
   {
     messageId: { type: String, required: true },
-    conversation_user: { type: String, default: "" },
-    conversation_bot: { type: String, default: "" },
+    userText: { type: String, default: "" },
+    botText: { type: String, default: "" },
     type: { type: String, default: "text" },
     timestamp: { type: Date, default: Date.now },
   },
@@ -13,8 +13,10 @@ const messageSubSchema = new mongoose.Schema(
 
 const conversationThreadSchema = new mongoose.Schema(
   {
+    message_ig: { type: String, default: "" },
     from: { type: String, required: true, index: true },
-    messages: { type: [messageSubSchema], default: [] },
+    type: { type: String, default: "text" },
+    conversations: { type: [conversationItemSchema], default: [] },
   },
   { timestamps: true }
 );
