@@ -11,7 +11,6 @@ const conversationItemSchema = new mongoose.Schema(
 
 const conversationThreadSchema = new mongoose.Schema(
   {
-    message_ig: { type: String, default: "" },
     from: { type: String, required: true, index: true },
     type: { type: String, default: "text" },
     conversations: { type: [conversationItemSchema], default: [] },

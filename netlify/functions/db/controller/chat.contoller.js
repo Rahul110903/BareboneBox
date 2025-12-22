@@ -21,9 +21,7 @@ const saveConversation = asyncHandler(async (dataToStore) => {
     $set: {},
   };
 
-  // Set top-level message_ig/type on insert (if provided)
-  if (dataToStore.message_ig)
-    update.$setOnInsert.message_ig = dataToStore.message_ig;
+  // Set top-level type on insert (if provided)
   if (dataToStore.type) update.$setOnInsert.type = dataToStore.type;
 
   // Push the conversation item (no need to dedupe by messageId since we store only userText/botText/timestamp)
