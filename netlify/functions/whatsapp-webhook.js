@@ -93,39 +93,46 @@ export const handler = async (event, context) => {
       const profileName = contacts?.[0]?.profile?.name || "";
       const displayPhoneNumber = metadata?.display_phone_number || "";
       const phoneNumberId = metadata?.phone_number_id || "";
+      let questionToAsk = "";
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
+        const conversationUser = msg.text?.body || "";
+        // TODO: Testing the Whole Process (Static) - Conditions
+        if (conversationUser == "Hi") {
+          await whatsappBot(from, QUESTIONS.whatIsYourName);
+          questionToAsk = QUESTIONS.whatIsYourName;
+        } else if (conversationUser == "Rahul") {
+          await whatsappBot(from, QUESTIONS.howOldAreYou);
+          questionToAsk = QUESTIONS.howOldAreYou;
+        } else if (conversationUser == "23") {
+          await whatsappBot(from, QUESTIONS.whatIsYourGender);
+          questionToAsk = QUESTIONS.whatIsYourGender;
+        } else if (conversationUser == "Male") {
+          await whatsappBot(
+            from,
+            QUESTIONS.whichDateYouWantToBookAnAppointment
+          );
+          questionToAsk = QUESTIONS.whichDateYouWantToBookAnAppointment;
+        } else if (conversationUser == "25th December") {
+          await whatsappBot(
+            from,
+            QUESTIONS.whichTimeSlotYouWantToBookAnAppointment
+          );
+          questionToAsk = QUESTIONS.whichTimeSlotYouWantToBookAnAppointment;
+        }
+
         const dataToStore = {
           from: from,
           messageId: msg.id,
           conversation_user: msg.text?.body || "",
-          conversation_bot: QUESTIONS.whatIsYourName || "",
+          conversation_bot: questionToAsk || "",
           type: msg.type,
           timestamp: new Date(Number(msg.timestamp) * 1000),
           display_phone_number: displayPhoneNumber,
           phone_number_id: phoneNumberId,
           profile_name: profileName,
         };
-
-        // TODO: Testing the Whole Process (Static) - Conditions
-        if (dataToStore.conversation_user == "Hi") {
-          await whatsappBot(from, QUESTIONS.whatIsYourName);
-        } else if (dataToStore.conversation_user == "Rahul") {
-          await whatsappBot(from, QUESTIONS.howOldAreYou);
-        } else if (dataToStore.conversation_user == "23") {
-          await whatsappBot(from, QUESTIONS.whatIsYourGender);
-        } else if (dataToStore.conversation_user == "Male") {
-          await whatsappBot(
-            from,
-            QUESTIONS.whichDateYouWantToBookAnAppointment
-          );
-        } else if (dataToStore.conversation_user == "25th December") {
-          await whatsappBot(
-            from,
-            QUESTIONS.whichTimeSlotYouWantToBookAnAppointment
-          );
-        }
 
         await saveConversation(dataToStore);
         console.log("Message saved to database successfully.");
