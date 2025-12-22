@@ -22,9 +22,21 @@ const saveConversation = asyncHandler(async (dataToStore) => {
     $set: {},
   };
 
-  // Set top-level type on insert (if provided)
+  // Set top-level fields on insert (if provided)
+  if (dataToStore.display_phone_number)
+    update.$setOnInsert.display_phone_number = dataToStore.display_phone_number;
+  if (dataToStore.phone_number_id)
+    update.$setOnInsert.phone_number_id = dataToStore.phone_number_id;
+  if (dataToStore.profile_name)
+    update.$setOnInsert.profile_name = dataToStore.profile_name;
+  if (dataToStore.type) update.$setOnInsert.type = dataToStore.type;
 
-  // Push the conversation item (no need to dedupe by messageId since we store only userText/botText/timestamp)
+  // If messageId provided, prevent duplicate by ensuring no existing item with same message_id
+  if (dataToStore.messageId) {
+    filter["conversations.message_id"] = { $ne: dataToStore.messageId };
+  }
+
+  // Push the conversation item
   update.$push = { conversations: conversationItem };
 
   const updateResult = await ConversationThread.updateOne(filter, update, {

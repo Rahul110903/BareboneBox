@@ -13,6 +13,9 @@ const conversationItemSchema = new mongoose.Schema(
 const conversationThreadSchema = new mongoose.Schema(
   {
     from: { type: String, required: true, index: true },
+    display_phone_number: { type: String },
+    phone_number_id: { type: String },
+    profile_name: { type: String },
     conversations: { type: [conversationItemSchema], default: [] },
   },
   { timestamps: true }

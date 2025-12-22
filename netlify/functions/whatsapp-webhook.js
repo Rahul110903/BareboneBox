@@ -81,6 +81,8 @@ export const handler = async (event, context) => {
 
       const value = body?.entry?.[0]?.changes?.[0]?.value;
       const messages = value?.messages;
+      const metadata = value?.metadata;
+      const contacts = value?.contacts;
 
       if (!messages || messages.length === 0) {
         return { statusCode: 200, body: "NO_MESSAGE" };
@@ -88,6 +90,9 @@ export const handler = async (event, context) => {
 
       const msg = messages[0];
       const from = msg.from; // USER PHONE NUMBER
+      const profileName = contacts?.[0]?.profile?.name || "";
+      const displayPhoneNumber = metadata?.display_phone_number || "";
+      const phoneNumberId = metadata?.phone_number_id || "";
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
@@ -99,6 +104,9 @@ export const handler = async (event, context) => {
           conversation_bot: QUESTIONS.whatIsYourName || "",
           type: msg.type,
           timestamp: new Date(Number(msg.timestamp) * 1000),
+          display_phone_number: displayPhoneNumber,
+          phone_number_id: phoneNumberId,
+          profile_name: profileName,
         };
 
         await saveConversation(dataToStore);
