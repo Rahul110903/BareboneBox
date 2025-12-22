@@ -96,7 +96,6 @@ export const handler = async (event, context) => {
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
-        await whatsappBot(from, QUESTIONS.whatIsYourName);
         const dataToStore = {
           from: from,
           messageId: msg.id,
@@ -108,6 +107,25 @@ export const handler = async (event, context) => {
           phone_number_id: phoneNumberId,
           profile_name: profileName,
         };
+
+        // TODO: Testing the Whole Process (Static) - Conditions
+        if (conversation_user == "Hi") {
+          await whatsappBot(from, QUESTIONS.whatIsYourName);
+        } else if (conversation_user == "Rahul") {
+          await whatsappBot(from, QUESTIONS.howOldAreYou);
+        } else if (conversation_user == "23") {
+          await whatsappBot(from, QUESTIONS.whatIsYourGender);
+        } else if (conversation_user == "Male") {
+          await whatsappBot(
+            from,
+            QUESTIONS.whichDateYouWantToBookAnAppointment
+          );
+        } else if (conversation_user == "25th December") {
+          await whatsappBot(
+            from,
+            QUESTIONS.whichTimeSlotYouWantToBookAnAppointment
+          );
+        }
 
         await saveConversation(dataToStore);
         console.log("Message saved to database successfully.");
