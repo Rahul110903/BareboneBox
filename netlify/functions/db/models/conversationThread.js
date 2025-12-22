@@ -20,6 +20,6 @@ const conversationThreadSchema = new mongoose.Schema(
 );
 
 export const ConversationThread = mongoose.model(
-  "ConversationThread",
+  "ConversationUser",
   conversationThreadSchema
 );
