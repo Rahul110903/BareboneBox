@@ -22,16 +22,21 @@ const saveConversation = asyncHandler(async (dataToStore) => {
   };
 
   // Set top-level message_ig/type on insert (if provided)
-  if (dataToStore.message_ig) update.$setOnInsert.message_ig = dataToStore.message_ig;
+  if (dataToStore.message_ig)
+    update.$setOnInsert.message_ig = dataToStore.message_ig;
   if (dataToStore.type) update.$setOnInsert.type = dataToStore.type;
 
   // Push the conversation item (no need to dedupe by messageId since we store only userText/botText/timestamp)
   update.$push = { conversations: conversationItem };
 
-  const updateResult = await ConversationThread.updateOne(filter, update, { upsert: true });
+  const updateResult = await ConversationThread.updateOne(filter, update, {
+    upsert: true,
+  });
 
   // Fetch the thread to return
-  const thread = await ConversationThread.findOne({ from: dataToStore.from }).lean();
+  const thread = await ConversationThread.findOne({
+    from: dataToStore.from,
+  }).lean();
 
   if (!thread) {
     throw new ApiError(500, "Failed to save conversation to database");
@@ -48,10 +53,12 @@ const saveConversation = asyncHandler(async (dataToStore) => {
     }));
   }
 
-  if (thread.createdAt) thread.createdAt = new Date(thread.createdAt).toISOString();
-  if (thread.updatedAt) thread.updatedAt = new Date(thread.updatedAt).toISOString();
+  if (thread.createdAt)
+    thread.createdAt = new Date(thread.createdAt).toISOString();
+  if (thread.updatedAt)
+    thread.updatedAt = new Date(thread.updatedAt).toISOString();
 
-  ApiResponse(201, thread, "Conversation saved successfully");
+  new ApiResponse(201, thread, "Conversation saved successfully");
 
   return thread;
 });
