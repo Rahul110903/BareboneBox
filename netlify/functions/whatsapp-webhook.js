@@ -31,6 +31,16 @@
 
 import { whatsappSendController } from "../HealthBot/src/api/whatsappController.js";
 import { QUESTIONS } from "../HealthBot/src/text/question.js";
+import { saveConversation } from "./db/controller/chat.contoller.js";
+import connectDB from "./db/index.js";
+
+connectDB()
+  .then(() => {
+    console.log("DB Connected");
+  })
+  .catch((err) => {
+    console.log("Error in connecting to DB:", err);
+  });
 
 const whatsappBot = async (to, text) => {
   const response = await whatsappSendController(to, text);
@@ -71,12 +81,21 @@ export const handler = async (event, context) => {
 
       const msg = messages[0];
       const from = msg.from; // USER PHONE NUMBER
-      const userText = msg.text?.body;
 
       // Call whatsappBot in background (don't await to respond quickly)
       try {
         await whatsappBot(from, QUESTIONS.whatIsYourName);
-        console.log("WhatsApp bot executed successfully.");
+        const dataToStore = {
+          from: from,
+          messageId: msg.id,
+          conversation_user: msg.text?.body || "",
+          conversation_bot: QUESTIONS.whatIsYourName || "",
+          type: msg.type,
+          timestamp: new Date(Number(msg.timestamp) * 1000),
+        };
+
+        await saveConversation(dataToStore);
+        console.log("Message saved to database successfully.");
       } catch (botError) {
         console.error("WhatsApp bot error:", botError);
         return {
