@@ -40,15 +40,7 @@ const whatsappBot = async (to, text) => {
 };
 
 export const handler = async (event, context) => {
-  // Initialize DB connection once per function invocation
-  try {
-    await connectDB();
-    console.log("DB Connected");
-  } catch (err) {
-    console.log("Error in connecting to DB:", err);
-    return { statusCode: 500, body: "Database connection failed" };
-  }
-  // GET: verification handshake
+  // GET: verification handshake (no DB needed)
   if (event.httpMethod === "GET") {
     const VERIFY_TOKEN = "QUxZkpyscYapMEppG7zadr9fycp4EHGpugKfd";
     const params = event.queryStringParameters || {};
@@ -66,8 +58,23 @@ export const handler = async (event, context) => {
     return { statusCode: 403, body: "Forbidden" };
   }
 
-  // POST: webhook event from Meta
+  // POST: webhook event from Meta - Initialize DB connection
   if (event.httpMethod === "POST") {
+    try {
+      await connectDB();
+      console.log("DB Connected");
+    } catch (err) {
+      console.error("Error in connecting to DB:", err);
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: "Database connection failed",
+          details: errorMessage,
+        }),
+      };
+    }
+
     try {
       const body = event.body ? JSON.parse(event.body) : {};
       console.log("WhatsApp webhook event:", JSON.stringify(body));
