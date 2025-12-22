@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const conversationItemSchema = new mongoose.Schema(
   {
+    message_id: { type: String },
     userText: { type: String, default: "" },
     botText: { type: String, default: "" },
     type: { type: String, default: "text" },
