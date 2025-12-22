@@ -32,7 +32,7 @@
 import { whatsappSendController } from "../HealthBot/src/api/whatsappController.js";
 import { QUESTIONS } from "../HealthBot/src/text/question.js";
 import { saveConversation } from "./db/controller/chat.contoller.js";
-import connectDB from "./db/index.js";
+import { connectDB } from "./db/index.js";
 
 const whatsappBot = async (to, text) => {
   const response = await whatsappSendController(to, text);
