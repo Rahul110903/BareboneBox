@@ -1,5 +1,5 @@
 import { asyncHandler } from "../utils/asyncHandler";
-import { Conversation } from "../models/conversation.js";
+import { ConversationThread } from "../models/conversationThread.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
@@ -8,15 +8,39 @@ const saveConversation = asyncHandler(async (dataToStore) => {
     throw new ApiError(400, "Missing required fields: from and messageId");
   }
 
-  const conversation = await Conversation.create(dataToStore);
+  const messageObj = {
+    messageId: dataToStore.messageId,
+    conversation_user: dataToStore.conversation_user || "",
+    conversation_bot: dataToStore.conversation_bot || "",
+    type: dataToStore.type || "text",
+    timestamp: dataToStore.timestamp || new Date(),
+  };
 
-  if (!conversation) {
+  // Push message into messages array only if messageId doesn't already exist
+  const updateResult = await ConversationThread.updateOne(
+    {
+      from: dataToStore.from,
+      "messages.messageId": { $ne: dataToStore.messageId },
+    },
+    {
+      $push: { messages: messageObj },
+      $setOnInsert: { from: dataToStore.from },
+    },
+    { upsert: true }
+  );
+
+  // Fetch the thread to return
+  const thread = await ConversationThread.findOne({
+    from: dataToStore.from,
+  }).lean();
+
+  if (!thread) {
     throw new ApiError(500, "Failed to save conversation to database");
   }
 
-  ApiResponse(201, conversation, "Conversation saved successfully");
+  ApiResponse(201, thread, "Conversation saved successfully");
 
-  return conversation;
+  return thread;
 });
 
 export { saveConversation };
